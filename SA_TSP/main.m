@@ -8,11 +8,11 @@
 clear;clc;
 
 load china; % geographic information
-plotcities(province, border, city); % draw the map of China
+plot_china(province, border, city); % draw the map of China
 
 numberofcities = length(city);      % number of cities
 % distance matrix: dis(i,j) is the distance between city i and j.
-dis = distancematrix(city);   
+dis = distance_matrix(city);   
 
 
 temperature = 10000;                 % Initialize the temperature.
@@ -26,7 +26,7 @@ seed = rng;
 route = randperm(numberofcities);
 
 % This is objective function, the total distance for the routes.
-previous_distance = totaldistance(route,dis);
+previous_distance = total_distance(route,dis);
 
 % This is a flag used to cool the current temperature after 100 iterations
 temperature_iterations = 1;
@@ -34,13 +34,13 @@ temperature_iterations = 1;
 plot_iterations = 1;
 
 % plot the current route
-plotroute(city, route, previous_distance, temperature);
+plot_route(city, route, previous_distance, temperature);
 
 while 1.0 < temperature
     % generate randomly a neighbouring solution
     temp_route = perturb(route,'reverse');
     % compute total distance of the temp_route
-    current_distance = totaldistance(temp_route, dis);
+    current_distance = total_distance(temp_route, dis);
     % compute change of distance
     diff = current_distance - previous_distance;
     
@@ -63,10 +63,10 @@ while 1.0 < temperature
     
     %  plot the current route every 200 iterations
     if plot_iterations >= 200
-       plotroute(city, route, previous_distance,temperature);
+       plot_route(city, route, previous_distance,temperature);
        plot_iterations = 0;
     end
 end
 
 % plot the final solution
-plotroute(city, route, previous_distance,temperature);
+plot_route(city, route, previous_distance,temperature);
